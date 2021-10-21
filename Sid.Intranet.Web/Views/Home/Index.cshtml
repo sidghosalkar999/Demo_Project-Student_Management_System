@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Styles.Render("~/IndexStyle/CSS")
+
+@{
+    var date = DateTime.Now.ToShortDateString();
+}
+
+<div class="jumbotron">
+    <h1>SSMS</h1>
+    <p class="lead">Welcome To Student Management System</p>
+    <p><a href="https://google.com" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>SSMS Information</h2>
+        <p>
+            A student management system helps a school manage data, communications, and scheduling.A school system generates and uses a large amount of data. This data must be communicated appropriately to students, faculty, and parents.
+        </p>
+        <p><a class="btn btn-default" href="https://google.com">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-8">
+        <h2>Get more Information</h2>
+        <p>Student Management System (SMS) is designed to track, store and manage student's data, like grades, attendance, interpersonal activities records, and all kind of information.</p>
+        <p><a class="btn btn-default" href="https://google.com">Learn more &raquo;</a></p>
+    </div>
+</div>
