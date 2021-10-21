@@ -1,93 +1,127 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Sid.Intranet.Web.Models;
 
 namespace Sid.Intranet.Web.Controllers
 {
     public class StudentController : Controller
     {
-        static List<Student> stuList = new List<Student>()
-            {
-                new Student(){ Id = 1, FirstName = "Sid", LastName = "Ghosalkar", Course = "C#", Address = "Mangaon", PhoneNumber = "6756756767" },
-                new Student(){ Id = 2, FirstName = "Vivek", LastName = "Patil", Course = ".Net Framework", Address = "Panvel", PhoneNumber = "9845434534" },
-                new Student(){ Id = 3, FirstName = "Aniket", LastName = "Bhuse", Course = "Java", Address = "Vashi", PhoneNumber = "9875676677" },
-                new Student(){ Id = 4, FirstName = "Abhishek", LastName = "Hadke", Course = "Python", Address = "Airoli", PhoneNumber = "9770968687" },
-                new Student(){ Id = 5, FirstName = "Rupali", LastName = "Jadhav", Course = "Entity Framework", Address = "Nerul", PhoneNumber = "7768686680"},
-                new Student(){ Id = 6, FirstName = "Bhavika", LastName = "Mehta", Course = "MVC", Address = "Jalgaon", PhoneNumber = "6887896998" },
-            };
+        private SidDbContext db = new SidDbContext();
 
         // GET: Student
-        public ViewResult Welcome()
-        {
-            return View();
-            //return "Welcome to SMS";
-        }
-        public EmptyResult Empty()
-        {
-            return new EmptyResult();
-            //return View();
-            //return "Welcome to Student Management System";
-        }
-        public ContentResult Content()
-        {
-            return new ContentResult() { Content = "Welcome to Student Management System", ContentType = "Text/Html" };
-        }
         public ActionResult Index()
         {
-            stuList.OrderBy(e => e.FirstName);
-            return View(stuList);
-        }
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            //Get Record from DB
-            var model = stuList.Where(x => x.Id == id).FirstOrDefault();
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Edit(Student stu)
-        {
-            //Save record in Db
-            Student dbStudent = stuList.Where(x => x.Id == stu.Id).FirstOrDefault();
-            stuList.Remove(dbStudent);
-            dbStudent = stu;
-            stuList.Add(dbStudent);
-            stuList.OrderBy(e => e.FirstName);
-
-            return RedirectToAction("Index");
+            return View(db.Students.ToList());
         }
 
-        [HttpGet]
+        // GET: Student/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student);
+        }
+
+        // GET: Student/Create
         public ActionResult Create()
         {
             return View();
         }
 
+        // POST: Student/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(Student stu)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Course,Address,PhoneNumber")] Student student)
         {
-            stuList.Add(stu);
+            if (ModelState.IsValid)
+            {
+                db.Students.Add(student);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(student);
+        }
+
+        // GET: Student/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student);
+        }
+
+        // POST: Student/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Course,Address,PhoneNumber")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(student).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(student);
+        }
+
+        // GET: Student/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Student student = db.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return View(student);
+        }
+
+        // POST: Student/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Student student = db.Students.Find(id);
+            db.Students.Remove(student);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public ActionResult Details(int id)
+        protected override void Dispose(bool disposing)
         {
-            var model = stuList.Where(x => x.Id == id).FirstOrDefault();
-            return View(model);
-        }
-        [HttpGet]
-        public ActionResult Delete(int id)
-        {
-            var model = stuList.Where(x => x.Id == id).FirstOrDefault();
-            stuList.Remove(model);
-            return RedirectToAction("Index");
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

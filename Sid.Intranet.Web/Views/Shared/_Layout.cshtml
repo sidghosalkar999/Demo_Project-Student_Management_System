@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My Student Management System</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/IndexStyle/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("AddToHead", required: false)
 </head>
@@ -17,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("STUDENT MANAGEMENT SYSTEM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("STUDENT MANAGEMENT SYSTEM", "Index", "Home", new { area = "  " }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -25,7 +26,6 @@
                     <li>@Html.ActionLink("ABOUT", "About", "Home")</li>
                     <li>@Html.ActionLink("STUDENT DETAILS", "Index", "Student")</li>
                     <li>@Html.ActionLink("CONTACT US", "Contact", "Home")</li>
-
                 </ul>
             </div>
         </div>
