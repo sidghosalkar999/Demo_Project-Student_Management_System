@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My Student Management System</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/IndexStyle/css")
+    @*@Styles.Render("~/IndexStyle/css")*@
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("AddToHead", required: false)
 </head>
@@ -25,7 +25,7 @@
                     <li>@Html.ActionLink("HOME", "Index", "Home")</li>
 
                     @if (User.Identity.IsAuthenticated)
-                    {
+                    { 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-center text-uppercase" href="#" id="navbarDropdown" role="button" data-toogle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @User.Identity.Name
