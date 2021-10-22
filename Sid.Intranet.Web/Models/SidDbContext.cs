@@ -20,6 +20,8 @@ namespace Sid.Intranet.Web.Models
         }
 
         public System.Data.Entity.DbSet<Sid.Intranet.Web.Models.Student> Students { get; set; }
+        public System.Data.Entity.DbSet<Sid.Intranet.Web.Models.User> Users { get; set; }
+
 
     }
 }

@@ -27,7 +27,19 @@ namespace Sid.Intranet.Web.Models
 
         [MaxLength(50)]
         public string Address { get; set; }
+
+        [Required]
         [MaxLength(10)]
         public string PhoneNumber { get; set; }
+    }
+    public class User
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string Password { get; set; }
+
     }
 }

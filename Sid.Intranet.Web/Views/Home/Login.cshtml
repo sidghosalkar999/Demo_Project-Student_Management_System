@@ -1,0 +1,38 @@
+﻿@model Sid.Intranet.Web.Models.User
+@{
+    ViewBag.Title = "Login";
+}
+
+<link href="@Url.Content("~/Content/LoginStyle.css")" rel="stylesheet" type="text/css" />
+<h2>Login</h2>
+<div class="login_page">
+    <div class="form">
+
+        @using (Html.BeginForm())
+         {
+            @Html.AntiForgeryToken()
+            <div class="card custom-card">
+                <div class"card-header bg-primary text-white">
+                    <h3>Login Form</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary rounded-0">Login</button>
+                    </div>
+                </div>
+            </div>
+
+         }
+    </div>
+</div>
+
