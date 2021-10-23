@@ -10,6 +10,7 @@ using Sid.Intranet.Web.Models;
 
 namespace Sid.Intranet.Web.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         private SidDbContext db = new SidDbContext();
