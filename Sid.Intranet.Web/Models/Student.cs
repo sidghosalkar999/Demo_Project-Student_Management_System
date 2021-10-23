@@ -29,6 +29,7 @@ namespace Sid.Intranet.Web.Models
         public string Address { get; set; }
 
         [Required]
+        [MinLength(10)]
         [MaxLength(10)]
         public string PhoneNumber { get; set; }
     }
